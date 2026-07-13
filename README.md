@@ -1,18 +1,10 @@
 # nvidia-deep-reasoning
 
-NVIDIA Innovation: Solves distributed training reliability bottlenecks.
+**Portfolio motion** — multi-hop reasoning budget scheduler under GPU FLOP/token caps.
 
-## Pro Code Philosophy
+Not NVIDIA employment. Complements gpu-health + Colossus.
 
-Take what is known. Make it better. Do not touch the core.
-
-## The Imovable Force
-
-A force that does not move is not weak. It is so correct that it does not need to move.
-
-## Quality
-
-- Production-grade, not prototype
-- Self-documenting code
-- Zero magic numbers
-- Adversarial tests
+```bash
+python3 src/reasoning_scheduler.py
+python3 tests/test_reasoning_scheduler.py
+```
