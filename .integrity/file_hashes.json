@@ -1,18 +1,17 @@
 {
-  "repo": "nvidia-deep-reasoning",
-  "algorithm": "sha256",
-  "file_count": 11,
+  "file_count": 12,
   "hashes": {
-    "README.md": "9f0185b84dc6493d2947eaa4dcaca2a992364def9a61771b857f0c7b81e11de6",
-    "EASTER_EGGS.md": "0c4fc58a6163b54497fc8327ec77f4293330eea4ba636e30db202836bd450900",
     "AKOS.md": "7fe75c369aef1b05d842fbc5a4a2e347e949787e0a17bec0bb99a2f8b490b9ca",
+    "EASTER_EGGS.md": "0c4fc58a6163b54497fc8327ec77f4293330eea4ba636e30db202836bd450900",
     "HELIX_STRAND.md": "e522c425ea0b943fabe5031a385d84f3eb6058d6f4422da24db8ed11dafab834",
-    "mastermind_sidecar.py": "b1e0ccc572edc2e0c2dbae212fd14855e0d726daa6908ed482182a2df26ce640",
+    "README.md": "a3907049c6b7a11d1e4d81a2cfcc52258179414daf2849624eefa9f11422cc98",
     "SECURITY_AND_FLEET_OPS.md": "26141c0f07d95847d679de423ddb7bdee6f3e319d204383c89a58d6d3bb610c7",
-    "tests/test_reasoning_scheduler.py": "fceb88c80af131e98cab1fdf9ba9ba818dc95f58e1b55cf86402ae6fcbc5a24c",
-    ".github/workflows/ci.yml": "995d08a2a7b62870a4cef6384f1b3b37c3fbcdf8db494da4307521f1bb993cda",
-    "src/reasoning_scheduler.py": "0592a921a67b329099312566e8106632caab6dcb74138819b395e9ac82aad017",
+    "mastermind_sidecar.py": "b1e0ccc572edc2e0c2dbae212fd14855e0d726daa6908ed482182a2df26ce640",
+    "src/coupled_demo.py": "53931c9888b0d26c3a6902d4a6a000fe6ff930b2031ddf94e3b115a7ef0b0d45",
     "src/deep_reasoning.py": "5e2ab91f66aeeebb7b51a98155093ab11cbd583fb4171ceee8336a4e3a8e34e4",
-    "src/coupled_demo.py": "53931c9888b0d26c3a6902d4a6a000fe6ff930b2031ddf94e3b115a7ef0b0d45"
+    "src/flop_prune_kernel.cu": "977af3a9e2be3079bf6dc0b7bbec2ca29aa9b698620c6a6585bf25d90a6d7275",
+    "src/reasoning_scheduler.py": "0592a921a67b329099312566e8106632caab6dcb74138819b395e9ac82aad017",
+    "tests/test_flop_prune.py": "1ed3bbb15ac339d852996540a87dd1483f7c556a1554d93bffe4d4cb6a29d4fb",
+    "tests/test_reasoning_scheduler.py": "fceb88c80af131e98cab1fdf9ba9ba818dc95f58e1b55cf86402ae6fcbc5a24c"
   }
 }
