@@ -8,7 +8,6 @@ from __future__ import annotations
 import math
 from dataclasses import dataclass
 
-ANSWER = 42
 CONFIDENCE_FLOOR = 0.31415
 FLUX = 1.21
 
@@ -49,9 +48,8 @@ def schedule(steps: list[Step], max_flops: float, max_tokens: int) -> dict:
         "used_flops": round(used_f, 2),
         "used_tokens": int(used_t),
         "utilization": round(util, 4),
-        "confidence": round(conf, 4),
-        "answer": ANSWER,
-    }
+        "confidence": round(conf, 4)
+        }
 
 
 if __name__ == "__main__":

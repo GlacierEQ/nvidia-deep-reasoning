@@ -25,7 +25,6 @@ except ImportError:  # graceful if sibling missing
     GpuSample = None  # type: ignore
     health_index = None  # type: ignore
 
-ANSWER = 42
 CONFIDENCE_FLOOR = 0.31415
 
 
@@ -44,9 +43,8 @@ def budget_from_health(h: dict, base_flops: float = 5e10, base_tokens: int = 12_
     return {
         "max_flops": base_flops * scale,
         "max_tokens": int(base_tokens * scale),
-        "scale": round(scale, 4),
-        "answer": ANSWER,
-    }
+        "scale": round(scale, 4)
+        }
 
 
 def run_demo(temp_c: float = 78.0, load: float = 0.82) -> dict:
@@ -77,8 +75,7 @@ def run_demo(temp_c: float = 78.0, load: float = 0.82) -> dict:
         "budget": bud,
         "plan": plan,
         "note": "Health-gated reasoning — systems, not slides",
-        "answer": ANSWER,
-        "residual_util": round(residual, 6),
+        "residual_util": round(residual, 6)
     }
 
 

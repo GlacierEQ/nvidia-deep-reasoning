@@ -1,0 +1,38 @@
+{
+  "schema": "glaciereq.operability-receipt.v1",
+  "repository": "GlacierEQ/nvidia-deep-reasoning",
+  "at": "2026-08-10T04:12Z",
+  "source_sha": "e2bc9644218d4241eccd81e58a4060074ad661e973becc4175ce205fb0a0cecb",
+  "entry": "scripts/operate.py",
+  "primary_output": {
+    "module": "coupled_demo",
+    "ok": true,
+    "repository": "GlacierEQ/nvidia-deep-reasoning",
+    "smoke": {
+      "args": [
+        "[Step(name='sample_name', tokens=1, flop",
+        "1.0",
+        "1"
+      ],
+      "content_checked": true,
+      "invoked": true,
+      "kind": "fn",
+      "name": "schedule",
+      "result": {
+        "confidence": 0.8264,
+        "plan": [
+          {
+            "admitted_tokens": 1,
+            "status": "FULL",
+            "step": "sample_name"
+          }
+        ],
+        "used_flops": 1.0,
+        "used_tokens": 1,
+        "utilization": 1.0
+      }
+    }
+  },
+  "dual_run_ok": true,
+  "result": "PASS"
+}

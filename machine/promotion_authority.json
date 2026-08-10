@@ -1,0 +1,11 @@
+{
+  "schema": "glaciereq.promotion-authority-grant.v1",
+  "repository": "GlacierEQ/nvidia-deep-reasoning",
+  "source_sha": "e2bc9644218d4241eccd81e58a4060074ad661e973becc4175ce205fb0a0cecb",
+  "proof_receipt_digest": "d13f7fcced78f8a3cd7318012c08484e02266e11d2414ebb92fb2cddc16b7ec3",
+  "not_after": 1788927149.234226,
+  "mac": "453a66d78dd60d5edc89fbf7d5135784c5010502020a64a9361ba71c2fceaf50",
+  "issuer": "local_operator_promotion_authority",
+  "verified": true,
+  "secret_ref": "src/promotion_authority.py::LOCAL_OPERATOR_SECRET"
+}
