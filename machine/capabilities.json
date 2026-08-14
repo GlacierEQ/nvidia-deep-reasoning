@@ -1,1 +1,14 @@
-{"capabilities": ["hyper-scaling"]}
+{
+  "capabilities": [
+    "deterministic-modeled-reasoning-budget-scheduling",
+    "validated-partial-admission-under-token-and-flop-caps",
+    "deterministic-cpu-threshold-pruning-reference",
+    "cuda-threshold-kernel-source-reference"
+  ],
+  "evidence_states": [
+    "LOCAL_REASONING_BUDGET_MODEL_NOT_NVIDIA_OR_LLM_RUNTIME_AUTHORITY",
+    "LOCAL_THRESHOLD_PRUNING_REFERENCE_NOT_CUDA_PERFORMANCE_PROOF"
+  ],
+  "cuda_executed": false,
+  "operational_authority": false
+}
