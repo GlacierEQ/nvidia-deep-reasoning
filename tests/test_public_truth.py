@@ -45,4 +45,6 @@ def test_cuda_source_is_not_misrepresented_as_entropy_or_flop_measurement() -> N
     cuda = (ROOT / "src/flop_prune_kernel.cu").read_text(encoding="utf-8")
     assert "entropy(" not in cuda
     assert "softmax" not in cuda.lower()
-    assert "flop" not in cuda.lower().replace("flop_prune", "") or "FLOP reduction" not in cuda
+    residual_cuda = cuda.lower().replace("flop_prune", "")
+    assert "flop reduction" not in residual_cuda
+    assert "measured flop" not in residual_cuda
