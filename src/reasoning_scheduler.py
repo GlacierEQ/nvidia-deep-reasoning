@@ -25,13 +25,19 @@ def _validate_step(step: Step) -> None:
         raise ValueError("step name is required")
     if isinstance(step.tokens, bool) or not isinstance(step.tokens, int) or step.tokens < 0:
         raise ValueError("step tokens must be a non-negative integer")
+    if isinstance(step.flops_per_token, bool) or not isinstance(step.flops_per_token, (int, float)):
+        raise ValueError("flops_per_token must be a finite positive number")
     if not math.isfinite(step.flops_per_token) or step.flops_per_token <= 0:
         raise ValueError("flops_per_token must be finite and positive")
+    if isinstance(step.priority, bool) or not isinstance(step.priority, (int, float)):
+        raise ValueError("priority must be a finite number in 0..1")
     if not math.isfinite(step.priority) or not 0.0 <= step.priority <= 1.0:
         raise ValueError("priority must be finite and in 0..1")
 
 
 def schedule(steps: list[Step], max_flops: float, max_tokens: int) -> dict:
+    if isinstance(max_flops, bool) or not isinstance(max_flops, (int, float)):
+        raise ValueError("max_flops must be a finite non-negative number")
     if not math.isfinite(max_flops) or max_flops < 0:
         raise ValueError("max_flops must be finite and non-negative")
     if isinstance(max_tokens, bool) or not isinstance(max_tokens, int) or max_tokens < 0:
@@ -44,7 +50,6 @@ def schedule(steps: list[Step], max_flops: float, max_tokens: int) -> dict:
     used_tokens = 0
     plan: list[dict] = []
     for _, step in ordered:
-        need_flops = step.tokens * step.flops_per_token
         room_tokens = max_tokens - used_tokens
         room_flops = max_flops - used_flops
         admit_tokens = min(
@@ -58,14 +63,15 @@ def schedule(steps: list[Step], max_flops: float, max_tokens: int) -> dict:
             status = "PARTIAL"
         else:
             status = "DEFERRED"
+        modeled_flops = admit_tokens * step.flops_per_token
         used_tokens += admit_tokens
-        used_flops += admit_tokens * step.flops_per_token
+        used_flops += modeled_flops
         plan.append(
             {
                 "step": step.name,
                 "requested_tokens": step.tokens,
                 "admitted_tokens": admit_tokens,
-                "modeled_flops": round(admit_tokens * step.flops_per_token, 2),
+                "modeled_flops": modeled_flops,
                 "status": status,
             }
         )
@@ -73,7 +79,7 @@ def schedule(steps: list[Step], max_flops: float, max_tokens: int) -> dict:
     utilization = used_flops / max_flops if max_flops > 0 else 0.0
     return {
         "plan": plan,
-        "used_flops": round(used_flops, 2),
+        "used_flops": used_flops,
         "used_tokens": used_tokens,
         "flop_budget_utilization": round(utilization, 4),
         "evidence_state": EVIDENCE_STATE,
