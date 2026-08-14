@@ -34,7 +34,8 @@ Current proof does **not** establish:
 ## Reproduce the verified scope
 
 ```bash
-PYTHONPATH=src python -m unittest discover -s tests -p 'test_*.py' -v
+python -m pip install pytest
+PYTHONPATH=src python -m pytest -q
 python src/reasoning_scheduler.py
 ```
 
