@@ -24,6 +24,13 @@ def test_schedule_respects_token_and_flop_caps() -> None:
     assert [item["status"] for item in result["plan"]] == ["FULL", "PARTIAL"]
 
 
+def test_exact_flop_accounting_is_not_rounded_above_budget() -> None:
+    result = schedule([Step("fractional", 1, 1.236, 1.0)], max_flops=1.236, max_tokens=1)
+    assert result["used_flops"] == pytest.approx(1.236)
+    assert result["used_flops"] <= 1.236
+    assert result["plan"][0]["modeled_flops"] == pytest.approx(1.236)
+
+
 def test_equal_priority_preserves_input_order() -> None:
     steps = [Step("first", 1, 1.0, 0.5), Step("second", 1, 1.0, 0.5)]
     result = schedule(steps, max_flops=2.0, max_tokens=2)
@@ -36,9 +43,12 @@ def test_equal_priority_preserves_input_order() -> None:
         ([Step("", 1, 1.0, 0.5)], 1.0, 1),
         ([Step("bad", -1, 1.0, 0.5)], 1.0, 1),
         ([Step("bad", 1, 0.0, 0.5)], 1.0, 1),
+        ([Step("bad", 1, True, 0.5)], 1.0, 1),
+        ([Step("bad", 1, 1.0, True)], 1.0, 1),
         ([Step("bad", 1, 1.0, math.nan)], 1.0, 1),
         ([], math.nan, 1),
         ([], -1.0, 1),
+        ([], True, 1),
         ([], 1.0, -1),
         ([], 1.0, True),
     ],
