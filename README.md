@@ -1,47 +1,41 @@
-# NVIDIA Deep Reasoning — CUDA FLOP-Bounded Attention Kernel 🟢
+# NVIDIA Deep Reasoning — Local Reasoning-Budget & Threshold-Policy Exhibit
 
-> **CUDA kernel for FLOP-bounded entropy pruning in deep reasoning LLM inference.**
+> **Independent GlacierEQ portfolio work. Not affiliated with, endorsed by, or connected to NVIDIA.**
 
-[![CUDA](https://img.shields.io/badge/CUDA-12.0+-76B900)]()
-[![Python](https://img.shields.io/badge/Python-3.9+-blue)]()
-[![Domain](https://img.shields.io/badge/Domain-CUDA%20Kernels-green)]()
+This repository demonstrates two bounded local mechanisms:
 
----
+1. a deterministic **reasoning-budget scheduler** that allocates modeled token/FLOP budgets across prioritized steps; and
+2. a deterministic **CPU threshold-pruning reference model** aligned with the simple score-threshold semantics present in `src/flop_prune_kernel.cu`.
 
-## 🎯 For Recruiters & Hiring Managers
+## Verified local scope
 
-This repository implements a **CUDA FLOP-bounded attention pruning kernel** — dynamically zeroing out low-entropy attention weights on NVIDIA Tensor Cores during long-chain reasoning. It demonstrates:
+- `src/reasoning_scheduler.py` validates modeled step costs and allocates FULL / PARTIAL / DEFERRED token budgets without exceeding caller-supplied token or FLOP ceilings.
+- `src/flop_prune.py` applies deterministic finite-value threshold pruning and reports the observed fraction of local inputs zeroed.
+- Both Python surfaces return explicit evidence state and `operational_authority: false`.
+- `src/flop_prune_kernel.cu` is retained as a **CUDA source reference artifact**. Current repository CI does not compile or execute CUDA and therefore does not claim CUDA runtime proof.
 
-- **Custom CUDA kernel development** with parallel thread block grid scheduling
-- **In-kernel entropy evaluation** discarding uninformative attention heads before softmax
-- **FLOP count reduction** by up to 60% during extended chain-of-thought generation
-- **Python simulation test wrapper** verifying numerical output against PyTorch baseline
+## Evidence boundaries
 
-**Why this matters**: Deep reasoning models (like o1/o3 class) spend massive FLOPs on long generation chains. Custom CUDA attention kernels reduce generation cost without sacrificing reasoning depth.
+`LOCAL_REASONING_BUDGET_MODEL_NOT_NVIDIA_OR_LLM_RUNTIME_AUTHORITY`
 
----
+`LOCAL_THRESHOLD_PRUNING_REFERENCE_NOT_CUDA_PERFORMANCE_PROOF`
 
-## 🔬 For Engineers & Technical Reviewers
+Current proof does **not** establish:
 
-### Core Components
+- NVIDIA affiliation, employment, endorsement, or proprietary access;
+- CUDA compilation, GPU execution, Tensor Core use, or an optimized attention implementation;
+- entropy computation inside the CUDA kernel;
+- any measured FLOP reduction, latency improvement, accuracy preservation, or reasoning-quality benefit;
+- PyTorch parity or comparison with an executed CUDA kernel;
+- an o1/o3-class model implementation or access to proprietary reasoning traces;
+- a live MCP tool, Mastermind connection, APEX Highway connection, or provider integration;
+- production inference scheduling, hardware control, or operational authority.
 
-| Component | Language | Purpose |
-|---|---|---|
-| `src/flop_prune_kernel.cu` | CUDA | Custom CUDA kernel for attention score thresholding |
-| `tests/test_flop_prune.py` | Python | Test wrapper comparing CUDA output with PyTorch |
-
----
-
-## 🤖 ML/AI & Programmatic Mesh Integration
-
-- **MCP Tool**: `gpu_prune_stats()` — returns attention pruning efficiency metrics
-- **Mastermind Sidecar**: Fully connected to APEX Highway mesh
-- **SHA-256 Integrity**: Tracked in `.integrity/file_hashes.json`
-
----
-
-## ⚡ Quick Start
+## Reproduce the verified scope
 
 ```bash
-python3 tests/test_flop_prune.py
+PYTHONPATH=src python -m unittest discover -s tests -p 'test_*.py' -v
+python src/reasoning_scheduler.py
 ```
+
+The repository-owned CI verifies the Python scheduler, threshold reference model, malformed-input behavior, public truth boundary, and source-level CUDA nonclaim on Python 3.11, 3.12, and 3.13.
