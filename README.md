@@ -1,47 +1,63 @@
-# NVIDIA Deep Reasoning — CUDA FLOP-Bounded Attention Kernel 🟢
+# NVIDIA Deep Reasoning
 
-> **CUDA kernel for FLOP-bounded entropy pruning in deep reasoning LLM inference.**
+**Deterministic local attention-score pruning and reasoning-budget scheduling.**
 
-[![CUDA](https://img.shields.io/badge/CUDA-12.0+-76B900)]()
-[![Python](https://img.shields.io/badge/Python-3.9+-blue)]()
-[![Domain](https://img.shields.io/badge/Domain-CUDA%20Kernels-green)]()
+This is an **independent portfolio project**. It is **not affiliated with NVIDIA**, does not use proprietary NVIDIA data, and does not establish NVIDIA employment, endorsement, telemetry access, or hardware authority.
 
----
+## What is implemented
 
-## 🎯 For Recruiters & Hiring Managers
+The repository contains two bounded, executable mechanisms:
 
-This repository implements a **CUDA FLOP-bounded attention pruning kernel** — dynamically zeroing out low-entropy attention weights on NVIDIA Tensor Cores during long-chain reasoning. It demonstrates:
+1. **Attention-score thresholding** in `src/attention_pruning.py`
+   - validates finite numeric inputs;
+   - masks scores strictly below a caller-supplied threshold;
+   - reports kept/pruned counts and masked fraction;
+   - returns `operational_authority=false`.
+2. **Reasoning-budget scheduling** in `src/reasoning_scheduler.py`
+   - orders local reasoning steps by priority;
+   - admits full, partial, or deferred token work under explicit token and modeled-work budgets;
+   - never emits hardware commands.
 
-- **Custom CUDA kernel development** with parallel thread block grid scheduling
-- **In-kernel entropy evaluation** discarding uninformative attention heads before softmax
-- **FLOP count reduction** by up to 60% during extended chain-of-thought generation
-- **Python simulation test wrapper** verifying numerical output against PyTorch baseline
+`src/flop_prune_kernel.cu` is a small CUDA threshold-mask source artifact corresponding to the local thresholding idea. **CUDA source is not compiled or benchmarked by hosted CI.** The verified portfolio capability is the deterministic local Python behavior, not GPU execution.
 
-**Why this matters**: Deep reasoning models (like o1/o3 class) spend massive FLOPs on long generation chains. Custom CUDA attention kernels reduce generation cost without sacrificing reasoning depth.
+## What the proof does not establish
 
----
+- The project **does not measure FLOP reduction**, latency, throughput, energy savings, model quality, or production performance.
+- A masked-score fraction is not a measured hardware-work reduction.
+- No Tensor Core execution, CUDA runtime deployment, production inference serving, or NVIDIA telemetry is claimed.
+- There is **no live MCP, APEX, Mastermind, provider, or hardware integration**.
+- Historical local receipt files are not substitutes for exact-current-head hosted CI.
+- No operational or production authority is granted by repository metadata or sidecar files.
 
-## 🔬 For Engineers & Technical Reviewers
+## Verification
 
-### Core Components
-
-| Component | Language | Purpose |
-|---|---|---|
-| `src/flop_prune_kernel.cu` | CUDA | Custom CUDA kernel for attention score thresholding |
-| `tests/test_flop_prune.py` | Python | Test wrapper comparing CUDA output with PyTorch |
-
----
-
-## 🤖 ML/AI & Programmatic Mesh Integration
-
-- **MCP Tool**: `gpu_prune_stats()` — returns attention pruning efficiency metrics
-- **Mastermind Sidecar**: Fully connected to APEX Highway mesh
-- **SHA-256 Integrity**: Tracked in `.integrity/file_hashes.json`
-
----
-
-## ⚡ Quick Start
+Hosted CI runs on Python 3.11, 3.12, and 3.13 and performs:
 
 ```bash
-python3 tests/test_flop_prune.py
+python -m compileall -q src tests scripts
+python -m pytest -q
+python scripts/verify_public_truth.py
 ```
+
+For a local run:
+
+```bash
+python -m pip install pytest
+python -m pytest -q
+python scripts/verify_public_truth.py
+```
+
+## Example
+
+```python
+from src.attention_pruning import prune_attention_scores
+
+result = prune_attention_scores([0.85, 0.02, 0.10, 0.44], threshold=0.10)
+print(result.as_dict())
+```
+
+Scores equal to the threshold are retained. NaN, infinity, boolean pseudo-numerics, and other malformed numeric inputs fail closed.
+
+## Repository truth boundary
+
+The admissible public capability is intentionally narrow: **deterministic local attention-score thresholding plus deterministic local reasoning-budget scheduling**. Any stronger claim requires new implementation and exact-head proof before it belongs here.

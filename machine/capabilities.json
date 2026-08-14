@@ -1,1 +1,10 @@
-{"capabilities": ["hyper-scaling"]}
+{
+  "schema": "glaciereq.bounded-capabilities.v1",
+  "capabilities": [
+    "deterministic-local-attention-score-thresholding",
+    "deterministic-local-reasoning-budget-scheduling"
+  ],
+  "operational_authority": false,
+  "hardware_authority": false,
+  "live_provider_integration": false
+}
