@@ -2,21 +2,30 @@
   "schema": "glaciereq.repo-target-contract.v1",
   "identity": {
     "repository_id": "GlacierEQ/nvidia-deep-reasoning",
-    "family": "elite-estate"
+    "family": "reasoning-budget-portfolio"
   },
   "current": {
-    "state": "PROMOTED",
+    "state": "FUNCTIONAL_CANDIDATE",
     "implemented": true,
-    "tested": true,
-    "deployed": false
+    "tested_locally": true,
+    "deployed": false,
+    "cuda_executed": false,
+    "operational_authority": false
   },
-  "nonclaims": [
-    "no employer affiliation",
-    "no production deployment without receipt"
+  "verified_scope": [
+    "deterministic modeled reasoning-budget scheduling",
+    "partial admission under explicit token and FLOP caps",
+    "deterministic CPU threshold-pruning reference behavior",
+    "CUDA threshold-kernel source retained as unexecuted reference artifact"
   ],
-  "donor_plan": {
-    "mode": "none",
-    "donors": []
-  },
-  "frozen_at": "2026-08-10T04:12Z"
+  "nonclaims": [
+    "no NVIDIA affiliation, employment, endorsement, or proprietary access",
+    "no CUDA compilation, GPU execution, Tensor Core execution, or optimized attention proof",
+    "no measured FLOP reduction, latency gain, accuracy preservation, or reasoning-quality improvement",
+    "no PyTorch parity against an executed CUDA kernel",
+    "no proprietary reasoning-model implementation or trace access",
+    "no live MCP, APEX, Mastermind, or provider integration",
+    "no production inference, hardware, scheduler, or operational authority"
+  ],
+  "next_gate": "exact-current-head repository-native Python 3.11/3.12/3.13 truth proof"
 }

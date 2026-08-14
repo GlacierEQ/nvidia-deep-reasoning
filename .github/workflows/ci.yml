@@ -1,10 +1,49 @@
 name: CI
 
-on: push
+on:
+  push:
+    branches: [master]
+  pull_request:
+    branches: [master]
+
+permissions:
+  contents: read
 
 jobs:
-  ci:
+  verify:
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ["3.11", "3.12", "3.13"]
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - run: echo works
+      - name: Checkout exact source
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+          ref: ${{ github.event_name == 'pull_request' && github.event.pull_request.head.sha || github.sha }}
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+      - name: Install test runner
+        run: python -m pip install --disable-pip-version-check pytest
+      - name: Compile Python surfaces
+        run: python -m compileall -q src tests
+      - name: Run repository tests
+        env:
+          PYTHONPATH: src
+        run: python -m pytest -q
+      - name: Verify local evidence envelopes
+        env:
+          PYTHONPATH: src
+        run: |
+          python - <<'PY'
+          from flop_prune import prune_scores
+          from reasoning_scheduler import Step, schedule
+          scheduled = schedule([Step("reason", 5, 2.0, 1.0)], 10.0, 5)
+          pruned = prune_scores([0.1, 0.9], 0.5)
+          assert scheduled["operational_authority"] is False
+          assert pruned["cuda_executed"] is False
+          assert pruned["operational_authority"] is False
+          print({"scheduler": scheduled, "threshold_reference": pruned})
+          PY

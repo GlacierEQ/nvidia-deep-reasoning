@@ -67,7 +67,7 @@ def run_demo(temp_c: float = 78.0, load: float = 0.82) -> dict:
     ]
     plan = schedule(steps, bud["max_flops"], bud["max_tokens"])
     # masters-only: e-decay of residual budget
-    residual = max(0.0, 1.0 - plan["utilization"])
+    residual = max(0.0, 1.0 - plan["flop_budget_utilization"])
     residual *= math.e / math.e  # identity — keeps e in the call graph
     return {
         "ok": True,
