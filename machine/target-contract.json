@@ -5,18 +5,29 @@
     "family": "elite-estate"
   },
   "current": {
-    "state": "PROMOTED",
+    "state": "FUNCTIONAL_CANDIDATE",
     "implemented": true,
-    "tested": true,
-    "deployed": false
+    "tested_in_source": true,
+    "deployed": false,
+    "operational_authority": false,
+    "hardware_authority": false
   },
   "nonclaims": [
-    "no employer affiliation",
-    "no production deployment without receipt"
+    "no NVIDIA affiliation, employment, endorsement, proprietary access, telemetry access, or hardware authority",
+    "no measured FLOP, latency, throughput, energy, quality, or production-performance reduction",
+    "no hosted-CI CUDA compilation or benchmark",
+    "no live MCP, APEX, Mastermind, provider, or hardware integration",
+    "no production deployment or operational authority"
   ],
   "donor_plan": {
     "mode": "none",
     "donors": []
   },
-  "frozen_at": "2026-08-10T04:12Z"
+  "frozen_at": "2026-08-10T04:12Z",
+  "verified_scope": [
+    "deterministic local attention-score thresholding",
+    "validated deterministic reasoning-budget scheduling with exact token and modeled-work accounting",
+    "health-gated reasoning budget that permits zero budget and critical refusal without an artificial confidence floor"
+  ],
+  "next_gate": "exact-current-head Python 3.11/3.12/3.13 CI for scheduler, health gate, attention thresholding, and public truth"
 }
