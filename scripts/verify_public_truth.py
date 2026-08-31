@@ -20,6 +20,7 @@ _REQUIRED_README = (
     "does not measure FLOP reduction",
     "CUDA source is not compiled or benchmarked by hosted CI",
     "no live MCP, APEX, Mastermind, provider, or hardware integration",
+    "no artificial minimum floor",
 )
 _UNSUPPORTED_PUBLIC_CLAIMS = (
     "up to 60%",
@@ -30,6 +31,7 @@ _UNSUPPORTED_PUBLIC_CLAIMS = (
 _EXPECTED_CAPABILITIES = (
     "deterministic-local-attention-score-thresholding",
     "deterministic-local-reasoning-budget-scheduling",
+    "fail-closed-health-gated-reasoning-budget",
 )
 
 
