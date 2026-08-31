@@ -14,7 +14,7 @@ from numbers import Real
 PLAN_SCHEMA = "glaciereq.nvidia-deep-reasoning.budget-plan.v1"
 
 
-def _finite_real(value: object, *, field: str, positive: bool = false) -> float:
+def _finite_real(value: object, *, field: str, positive: bool = False) -> float:
     if isinstance(value, bool) or not isinstance(value, Real):
         raise ValueError(f"{field} must be a finite real number")
     numeric = float(value)
