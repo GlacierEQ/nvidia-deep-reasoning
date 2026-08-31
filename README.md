@@ -14,11 +14,22 @@ The repository contains two bounded, executable mechanisms:
    - reports kept/pruned counts and masked fraction;
    - returns `operational_authority=false`.
 2. **Reasoning-budget scheduling** in `src/reasoning_scheduler.py`
-   - orders local reasoning steps by priority;
-   - admits full, partial, or deferred token work under explicit token and modeled-work budgets;
-   - never emits hardware commands.
+   - validates step identity, token estimates, modeled work per token, priority, and both budgets;
+   - uses stable priority ordering;
+   - admits full, partial, or deferred work with exact token/FLOP accounting;
+   - reports remaining budgets and utilization directly;
+   - emits no synthetic confidence score and never emits hardware commands.
+3. **Health-gated reasoning admission** in `src/coupled_demo.py`
+   - maps a caller-supplied bounded health index directly into a reasoning budget;
+   - applies no artificial minimum floor;
+   - allows zero health to produce zero reasoning budget;
+   - forces `CRITICAL` or unknown health state to an explicit refusal path.
 
 `src/flop_prune_kernel.cu` is a small CUDA threshold-mask source artifact corresponding to the local thresholding idea. **CUDA source is not compiled or benchmarked by hosted CI.** The verified portfolio capability is the deterministic local Python behavior, not GPU execution.
+
+## Budget integrity rule
+
+A degraded system is not made to look healthier by a decorative constant. The current health gate derives budget from the supplied bounded health state with **no artificial minimum floor**. A critical or zero-health observation can therefore reduce the reasoning budget to zero and return an explicit refusal instead of manufacturing confidence.
 
 ## What the proof does not establish
 
@@ -60,4 +71,4 @@ Scores equal to the threshold are retained. NaN, infinity, boolean pseudo-numeri
 
 ## Repository truth boundary
 
-The admissible public capability is intentionally narrow: **deterministic local attention-score thresholding plus deterministic local reasoning-budget scheduling**. Any stronger claim requires new implementation and exact-head proof before it belongs here.
+The admissible public capability is intentionally bounded: **deterministic local attention-score thresholding, exact local reasoning-budget scheduling, and fail-closed health-gated budget admission without an artificial floor**. Any stronger claim requires new implementation and exact-head proof before it belongs here.
