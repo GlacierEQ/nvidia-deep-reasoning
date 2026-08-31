@@ -7,7 +7,8 @@
   "hardware_authority": false,
   "verified_scope": [
     "deterministic-local-attention-score-thresholding",
-    "deterministic-local-reasoning-budget-scheduling"
+    "deterministic-local-reasoning-budget-scheduling",
+    "fail-closed-health-gated-reasoning-budget"
   ],
   "gates": {
     "IDENTITY_RESOLVED": {
@@ -16,11 +17,11 @@
     },
     "CENTRAL_MECHANISM_PRESENT": {
       "status": "PASS",
-      "evidence": "src/attention_pruning.py and src/reasoning_scheduler.py"
+      "evidence": "src/attention_pruning.py + src/reasoning_scheduler.py + src/coupled_demo.py"
     },
     "DETERMINISTIC_PROOF_GREEN": {
-      "status": "PENDING_CANONICAL_CI",
-      "evidence": "promotion requires successful exact-current-head hosted CI"
+      "status": "PENDING_CURRENT_HEAD_CI",
+      "evidence": "current scheduler and zero-floor health-gate tests are present; exact-current-head hosted CI receipt required"
     },
     "PROJECTION_TRUTH_CLOSED": {
       "status": "PASS",
@@ -38,5 +39,16 @@
     "no live MCP, APEX, Mastermind, provider, or hardware integration",
     "no production deployment or operational authority"
   ],
-  "evolution_cursor": "exact-current-head hosted CI, then external admission receipt"
+  "evolution_cursor": "exact-current-head hosted CI for strengthened scheduler and health gate, then external admission receipt",
+  "current_head_extension": {
+    "mechanisms": [
+      "exact token/flop budget accounting without synthetic confidence",
+      "zero-floor health gating with critical refusal"
+    ],
+    "tests": [
+      "tests/test_reasoning_scheduler.py",
+      "tests/test_coupled_demo.py"
+    ],
+    "state": "IMPLEMENTED_CURRENT_HEAD_NATIVE_PROOF_REQUIRED"
+  }
 }
