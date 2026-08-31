@@ -52,14 +52,6 @@ def test_flop_budget_can_partially_admit_work_and_is_fully_accounted() -> None:
     assert result["remaining_flops"] == 1.0
 
 
-@pytest.mark.parametrize(
-    "step",
-    [
-        Step,
-    ],
-)
-def test_placeholder_keeps_pytest_collection_explicit(step) -> None:
-    assert step is Step
 
 
 @pytest.mark.parametrize(
