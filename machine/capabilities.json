@@ -2,9 +2,11 @@
   "schema": "glaciereq.bounded-capabilities.v1",
   "capabilities": [
     "deterministic-local-attention-score-thresholding",
-    "deterministic-local-reasoning-budget-scheduling"
+    "deterministic-local-reasoning-budget-scheduling",
+    "fail-closed-health-gated-reasoning-budget"
   ],
   "operational_authority": false,
   "hardware_authority": false,
-  "live_provider_integration": false
+  "live_provider_integration": false,
+  "evidence_state": "IMPLEMENTED_CURRENT_HEAD_NATIVE_PROOF_REQUIRED"
 }
